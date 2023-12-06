@@ -13,8 +13,12 @@ var friendsList = document.getElementById('friends-container');
 function markActivePlan(oldIndex, newIndex) {
 	let liElements = document.querySelectorAll('li');
 
-	liElements[oldIndex].classList.remove('active');
-	liElements[newIndex].classList.add('active');
+	if (liElements.length > 1) {
+		liElements[oldIndex].classList.remove('active');
+		liElements[newIndex].classList.add('active');
+	} else {
+		liElements[0].classList.add('active');
+	}
 }
 
 function drawSchedule() {
