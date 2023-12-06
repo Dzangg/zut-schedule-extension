@@ -1,0 +1,43 @@
+body {
+	margin: 20px;
+	padding: 10px;
+	border: 1px solid black;
+	border-radius: 5px;
+	overflow-y: hidden;
+	max-width: 600px;
+}
+
+h3 {
+	width: 100%;
+}
+
+ul {
+	margin: 0 0 0 0px;
+	padding: 0;
+}
+
+li {
+	margin-left: 20px;
+}
+
+li.active::marker {
+	color: green;
+}
+
+.flex {
+	display: flex;
+}
+.friend-data {
+	display: flex;
+	flex-direction: column;
+}
+.friend-name {
+	display: flex;
+	flex-direction: row;
+}
+
+.friend-index {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}

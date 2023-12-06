@@ -1,0 +1,25 @@
+{
+    "manifest_version": 3,
+    "name": "ZUT Plan extension",
+    "description": "Get student plan by specified index.",
+    "version": "1.0.1",
+    "permissions": [
+        "activeTab",
+        "storage"
+    ],
+    "action": {
+        "default_popup": "./popup/popup.html",
+        "default_icon": "default_icon.png"
+    },
+    "content_scripts": [
+        {
+            "js": [
+                "./scripts/content-script.js"
+            ],
+            "matches": [
+                "https://plan.zut.edu.pl/*"
+            ],
+            "run_at": "document_idle"
+        }
+    ]
+}
