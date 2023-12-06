@@ -78,8 +78,8 @@ function addFriend(index, name) {
 		name: name,
 	};
 	planSchedule.push(friend);
-	newFriendId.innerText = '';
-	newFriendName.innerText = '';
+	newFriendId.value = '';
+	newFriendName.value = '';
 	saveData();
 	drawSchedule();
 }
