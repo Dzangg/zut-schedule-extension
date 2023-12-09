@@ -1,0 +1,7 @@
+# Created by https://www.toptal.com/developers/gitignore/api/less
+# Edit at https://www.toptal.com/developers/gitignore?templates=less
+
+### Less ###
+*.less
+
+# End of https://www.toptal.com/developers/gitignore/api/less

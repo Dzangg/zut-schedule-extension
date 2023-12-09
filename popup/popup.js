@@ -28,6 +28,10 @@ function drawSchedule() {
 	// friends
 	let friendsContainer = document.getElementById('friends-container');
 	friendsContainer.innerHTML = '';
+	let h2 = document.createElement('h2');
+	h2.className = 'container-title';
+	h2.innerText = 'Friends';
+	friendsContainer.appendChild(h2);
 
 	for (let i = 1; i < planSchedule.length; i++) {
 		let li = document.createElement('li');
@@ -42,8 +46,10 @@ function drawSchedule() {
 
 		h3.innerText = planSchedule[i].name;
 		h3.setAttribute('contenteditable', 'true');
-		div1.className = 'friend-name';
-		div2.className = 'friend-index';
+		h3.setAttribute('spellcheck', 'false');
+		h3.className = 'name';
+		div1.className = 'name-container';
+		div2.className = 'info-container';
 		inputText.type = 'text';
 		inputText.value = planSchedule[i].index;
 

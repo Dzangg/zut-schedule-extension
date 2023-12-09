@@ -1,0 +1,6 @@
+{
+  "devDependencies": {
+    "sass": "^1.69.5",
+    "webextension-polyfill": "^0.10.0"
+  }
+}

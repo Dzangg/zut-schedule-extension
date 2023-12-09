@@ -1,0 +1,222 @@
+@import url('https://fonts.googleapis.com/css?family=Barlow|Tomorrow:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron&family=Roboto&display=swap');
+:root {
+	--dark-blue: #01012d;
+	--black: #050a0e;
+	--yellow: #f7b801;
+	--dark-yellow: #d3a210;
+	--red: #d11149;
+	--white: #edf7f6;
+	--neon-pink: 341, 100%, 58%;
+	--neon-blue: 184, 96%, 46%;
+	--border: hsl(var(--neon-blue)), hsl(var(--neon-pink)), hsl(var(--neon-blue));
+	--border-image: linear-gradient(-45deg, var(--border)) 10% stretch;
+	/* border: 0.4rem solid hsl(var(--neon-blue));
+	border-bottom: 0.4rem solid hsl(var(--neon-blue));
+	border-image: var(--border-image); */
+	overflow-y: hidden;
+}
+
+::-webkit-scrollbar {
+	display: none;
+}
+
+body {
+	margin: 0px;
+	padding: 30px;
+	background-color: var(--dark-blue);
+	color: white;
+	font-family: 'Orbitron', sans-serif;
+	font-size: 0.8rem;
+}
+
+header {
+	text-align: center;
+	font-style: italic;
+}
+
+.glitch {
+	color: var(--white);
+	position: relative;
+	font-size: 1.4rem;
+	animation: glitch 8s 8s infinite;
+}
+
+.glitch::before {
+	content: attr(data-text);
+	position: absolute;
+	top: -5px;
+	text-shadow: -5px 0 magenta;
+	background: black;
+	overflow: hidden;
+	top: 0;
+	animation: noise-1 3s linear infinite alternate-reverse,
+		glitch 20s 20s infinite;
+}
+
+.glitch::after {
+	content: attr(data-text);
+	position: absolute;
+	left: 50px;
+	text-shadow: -5px 0 lightgreen;
+	background: black;
+	overflow: hidden;
+	top: 0;
+	animation: noise-2 3s linear infinite alternate-reverse,
+		glitch 20s 20s infinite;
+}
+
+@keyframes glitch {
+	1% {
+		transform: rotateX(10deg) skewX(90deg);
+	}
+	2% {
+		transform: rotateX(0deg) skewX(0deg);
+	}
+}
+
+@keyframes noise-1 {
+	$steps: 30;
+	@for $i from 1 through $steps {
+		#{percentage($i*(1/$steps))} {
+			$top: random(100);
+			$bottom: random(106 - $top);
+			clip-path: inset(#{$top}px 0 #{$bottom}px 0);
+		}
+	}
+}
+
+@keyframes noise-2 {
+	$steps: 30;
+	@for $i from 0 through $steps {
+		#{percentage($i*(1/$steps))} {
+			$top: random(200);
+			$bottom: random(201 - $top);
+			clip-path: inset(#{$top}px 0 #{$bottom}px 0);
+		}
+	}
+}
+
+hr {
+	height: 12px;
+	border: 0;
+	box-shadow: inset 0 12px 12px -12px hsl(var(--neon-blue));
+}
+
+ul {
+	margin: 0 0 0 0px;
+	padding: 0;
+}
+
+li {
+	margin-left: 20px;
+}
+
+li::marker {
+	color: var(--yellow);
+}
+
+li.active::marker {
+	color: green;
+}
+
+input {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	width: 90px;
+	height: 35px;
+	margin: 0px 10px 0px 0px;
+	padding: 20px;
+	border: 1px solid var(--yellow);
+	background-color: var(--dark-blue);
+	color: var(--white);
+	font-weight: bold;
+	letter-spacing: 2px;
+}
+
+button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 35px;
+	margin: 0px 10px;
+	padding: 20px;
+	border: 1px solid var(--white);
+	background-color: var(--yellow);
+	color: var(--black);
+	font-weight: bold;
+	text-transform: uppercase;
+	cursor: pointer;
+	clip-path: polygon(92% 0, 100% 25%, 100% 100%, 8% 100%, 0% 75%, 0 0);
+}
+
+button:hover {
+	background-color: var(--dark-yellow);
+}
+
+.container {
+	margin: 20px 10px;
+	padding: 20px;
+	border: 0.4rem solid hsl(var(--neon-blue));
+	border-image: var(--border-image);
+}
+
+.container-title {
+	font-size: 1rem;
+	text-align: center;
+	margin: 10px 0px;
+	color: var(--red);
+}
+
+.name {
+	color: var(--white);
+	letter-spacing: 2px;
+}
+
+.info-container {
+	justify-content: start;
+	align-items: center;
+}
+
+#user-container {
+	border-image: var(--border-image);
+}
+
+#user-container h2 {
+	color: var(--yellow);
+}
+
+#friends-container {
+	padding: 20px;
+}
+
+#add-user-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.name-container {
+	display: flex;
+	flex-direction: row;
+}
+
+.info-container {
+	display: flex;
+	flex-direction: row;
+}
+
+#add-user-container h2 {
+	margin-bottom: 20px;
+}
+
+#footer-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#delete-data-btn {
+	margin: 10px;
+}
