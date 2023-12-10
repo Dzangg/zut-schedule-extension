@@ -6,19 +6,30 @@ var newFriendId = document.getElementById('new-friend-id');
 var newFriendName = document.getElementById('new-friend-name');
 
 let planSchedule = [];
-let index = 0;
+let activeIndex = null;
 
 var friendsList = document.getElementById('friends-container');
 
-function markActivePlan(oldIndex, newIndex) {
-	let liElements = document.querySelectorAll('li');
-
-	if (liElements.length > 1) {
-		liElements[oldIndex].classList.remove('active');
-		liElements[newIndex].classList.add('active');
-	} else {
-		liElements[0].classList.add('active');
+function markActivePlan(newIndex = null) {
+	let activeLiElements = document.querySelectorAll('li.active');
+	if (activeLiElements) {
+		activeLiElements.forEach((li) => {
+			li.classList.remove('active');
+		});
 	}
+	if (newIndex !== null) {
+		let liElements = document.querySelectorAll('li');
+		liElements[newIndex].classList.add('active');
+	}
+
+	// if (oldIndex === null) {
+	// 	liElements[newIndex].classList.add('active');
+	// } else if (liElements.length > 1) {
+	// 	liElements[oldIndex].classList.remove('active');
+	// 	liElements[newIndex].classList.add('active');
+	// } else {
+	// 	liElements[0].classList.add('active');
+	// }
 }
 
 function drawSchedule() {
@@ -26,12 +37,31 @@ function drawSchedule() {
 	userInput.value = planSchedule[0].index || '';
 
 	// friends
-	let friendsContainer = document.getElementById('friends-container');
-	friendsContainer.innerHTML = '';
-	let h2 = document.createElement('h2');
-	h2.className = 'container-title';
-	h2.innerText = 'Friends';
-	friendsContainer.appendChild(h2);
+	let friendsContainer = null;
+	if (planSchedule.length > 1) {
+		friendsContainer = document.getElementById('friends-container');
+		if (!friendsContainer) {
+			// create friends container
+			friendsContainer = document.createElement('ul');
+			friendsContainer.id = 'friends-container';
+			friendsContainer.className = 'container';
+			friendsContainer.innerHTML = '';
+			let youContainer = document.getElementById('you-container');
+			youContainer.insertAdjacentElement('afterend', friendsContainer);
+			let h2 = document.createElement('h2');
+			h2.className = 'container-title';
+			h2.innerText = 'Friends';
+			friendsContainer.appendChild(h2);
+		} else {
+			friendsContainer.innerHTML = '';
+		}
+	} else {
+		// remove friends
+		friendsContainer = document.getElementById('friends-container');
+		if (friendsContainer) {
+			friendsContainer.remove();
+		}
+	}
 
 	for (let i = 1; i < planSchedule.length; i++) {
 		let li = document.createElement('li');
@@ -51,6 +81,7 @@ function drawSchedule() {
 		div1.className = 'name-container';
 		div2.className = 'info-container';
 		inputText.type = 'text';
+		inputText.setAttribute('maxlength', '5');
 		inputText.value = planSchedule[i].index;
 
 		selectBtn.innerText = 'Select';
@@ -60,6 +91,12 @@ function drawSchedule() {
 			planSchedule[i].name = h3.innerText;
 		};
 		selectBtn.onclick = () => {
+			planSchedule.map((friend, friendId) => {
+				if (friendId === i) {
+					friend.name = h3.innerText;
+					friend.index = inputText.value;
+				}
+			});
 			changeActivePlan(i);
 		};
 		deleteBtn.onclick = () => {
@@ -74,7 +111,8 @@ function drawSchedule() {
 		li.appendChild(div2);
 		friendsContainer.appendChild(li);
 	}
-	markActivePlan(index, index);
+
+	markActivePlan(activeIndex);
 }
 
 function addFriend(index, name) {
@@ -86,8 +124,9 @@ function addFriend(index, name) {
 	planSchedule.push(friend);
 	newFriendId.value = '';
 	newFriendName.value = '';
-	saveData();
-	drawSchedule();
+	saveData().then(() => {
+		drawSchedule();
+	});
 }
 
 function deleteFriend(id) {
@@ -95,14 +134,24 @@ function deleteFriend(id) {
 	planSchedule.map((friend, index) => {
 		friend.id = index;
 	});
-	saveData();
-	drawSchedule();
+	if (activeIndex === id) {
+		changeActivePlan(null);
+	}
+	saveData().then(() => {
+		drawSchedule();
+		adjustRootHeight();
+	});
+}
+
+function adjustRootHeight() {
+	const root = document.documentElement;
+	const body = document.body;
+	root.style.height = body.offsetHeight + 'px';
 }
 
 function changeActivePlan(i) {
-	let oldIndex = index;
-	index = i;
-	markActivePlan(oldIndex, i);
+	activeIndex = i;
+	markActivePlan(i);
 	chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
 		chrome.tabs.sendMessage(tabs[0].id, {
 			planData: planSchedule,
@@ -117,7 +166,7 @@ function loadData() {
 			['planData', 'activePlan'],
 			function ({ planData, activePlan }) {
 				planSchedule = planData || [{ id: 0, index: '', name: 'You' }];
-				index = activePlan;
+				activeIndex = activePlan;
 				resolve();
 			}
 		);
@@ -127,7 +176,7 @@ function loadData() {
 function saveData() {
 	return new Promise((resolve, reject) => {
 		chrome.storage.local.set(
-			{ planData: planSchedule, activePlan: index },
+			{ planData: planSchedule, activePlan: activeIndex },
 			() => {
 				resolve();
 			}
@@ -146,9 +195,13 @@ function deleteData() {
 }
 
 window.addEventListener('load', async (event) => {
-	loadData().then(() => {
-		drawSchedule();
-	});
+	loadData()
+		.then(() => {
+			drawSchedule();
+		})
+		.then(() => {
+			markActivePlan(activeIndex);
+		});
 });
 
 userBtn.addEventListener('click', () => {

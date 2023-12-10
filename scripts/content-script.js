@@ -7,7 +7,10 @@ window.addEventListener('load', () => {
 	// chrome.storage.local.remove('activePlan');
 	getData()
 		.then(({ planData, activePlan }) => {
-			changeInput(planData[activePlan].index);
+			// can be 0
+			if (activePlan !== null && activePlan !== undefined) {
+				changeInput(planData[activePlan].index);
+			}
 		})
 		.catch((err) => {
 			console.log(err);
@@ -22,11 +25,13 @@ function changeInput(value) {
 // on message received from popup
 chrome.runtime.onMessage.addListener(
 	({ planData, activePlan }, sender, sendResponse) => {
-		console.log('message received');
-		console.log('planData', planData);
-		console.log('activePlan', activePlan);
+		// console.log('message received');
+		// console.log('planData', planData);
+		// console.log('activePlan', activePlan);
 		saveData(planData, activePlan);
-		changeInput(planData[activePlan].index);
+		if (activePlan !== null && activePlan !== undefined) {
+			changeInput(planData[activePlan].index);
+		}
 	}
 );
 
@@ -35,6 +40,7 @@ function saveData(planData, activePlan) {
 		chrome.storage.local.set(
 			{ planData: planData, activePlan: activePlan },
 			() => {
+				// console.log('saved data: ', planData, activePlan);
 				resolve({ planData: planData, activePlan: activePlan });
 			}
 		);
@@ -46,6 +52,7 @@ function getData() {
 		chrome.storage.local.get(
 			['planData', 'activePlan'],
 			function ({ planData, activePlan }) {
+				// console.log('loaded data: ', planData, activePlan);
 				if (!planData) {
 					reject('Plan data not found.');
 				}

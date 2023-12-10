@@ -3,40 +3,54 @@
 		<link rel="stylesheet" href="popup.css" />
 	</head>
 	<body>
-		<header>
-			<h1 class="glitch" data-text="ZUTNIK PLAN">ZUTNIK PLAN</h1>
-		</header>
+		<div id="main">
+			<header>
+				<h1 class="glitch" data-text="ZUTNIK PLAN">ZUTNIK PLAN</h1>
+			</header>
 
-		<hr />
+			<hr />
 
-		<div>
 			<ul id="you-container" class="container">
 				<h2 class="container-title">Your plan</h2>
 				<li>
-					<h3 class="name">You</h3>
 					<div class="info-container">
-						<input placeholder="index..." id="user-input" />
+						<h3 class="name">You</h3>
+						<input placeholder="index..." id="user-input" maxlength="5" />
 						<button id="user-submit-btn">Select</button>
 					</div>
 				</li>
 			</ul>
 
-			<ul id="friends-container" class="container"></ul>
+			<!-- <ul id="friends-container" class="container"></ul> -->
 
 			<div id="add-user-container" class="container">
 				<h2 class="container-title">Add friend plan</h2>
 				<div class="info-container">
-					<input type="text" placeholder="Name" id="new-friend-name" />
-					<input type="text" placeholder="Index" id="new-friend-id" />
-					<button id="add-friend-btn">Add new</button>
+					<input
+						type="text"
+						placeholder="Name"
+						id="new-friend-name"
+						maxlength="20"
+					/>
+					<input
+						type="text"
+						placeholder="Index"
+						id="new-friend-id"
+						maxlength="5"
+					/>
 				</div>
+				<button id="add-friend-btn">Add new</button>
 			</div>
 
 			<div id="footer-container" class="container">
-				<button id="delete-data-btn">delete all data</button>
-				<button id="switch-theme-btn">Switch theme</button>
+				<h2 class="container-title">Utility</h2>
+				<div id="utility-container">
+					<button id="delete-data-btn">Delete data</button>
+					<button id="switch-theme-btn">Switch theme</button>
+				</div>
 			</div>
 		</div>
+
 		<script type="module" src="popup.js"></script>
 	</body>
 </html>

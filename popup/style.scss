@@ -22,6 +22,7 @@
 }
 
 body {
+	width: 330px;
 	margin: 0px;
 	padding: 10px;
 	background-color: var(--dark-blue);
@@ -33,69 +34,6 @@ body {
 header {
 	text-align: center;
 	font-style: italic;
-}
-
-.glitch {
-	margin: 15px 0px;
-	color: var(--white);
-	position: relative;
-	font-size: 1.4rem;
-	animation: glitch 8s 8s infinite;
-}
-
-.glitch::before {
-	content: attr(data-text);
-	position: absolute;
-	top: -5px;
-	text-shadow: -5px 0 magenta;
-	background: black;
-	overflow: hidden;
-	top: 0;
-	animation: noise-1 3s linear infinite alternate-reverse,
-		glitch 20s 20s infinite;
-}
-
-.glitch::after {
-	content: attr(data-text);
-	position: absolute;
-	left: 50px;
-	text-shadow: -5px 0 lightgreen;
-	background: black;
-	overflow: hidden;
-	top: 0;
-	animation: noise-2 3s linear infinite alternate-reverse,
-		glitch 20s 20s infinite;
-}
-
-@keyframes glitch {
-	1% {
-		transform: rotateX(10deg) skewX(90deg);
-	}
-	2% {
-		transform: rotateX(0deg) skewX(0deg);
-	}
-}
-
-@keyframes noise-1 {
-	$steps: 30;
-	@for $i from 1 through $steps {
-		#{percentage($i*(1/$steps))} {
-			$top: random(100);
-			$bottom: random(106 - $top);
-			clip-path: inset(#{$top}px 0 #{$bottom}px 0);
-		}
-	}
-}
-
-@keyframes noise-2 {
-	$steps: 30;
-	@for $i from 0 through $steps {
-		#{percentage($i*(1/$steps))} {
-			$top: random(200);
-			$bottom: random(201 - $top);
-			clip-path: inset(#{$top}px 0 #{$bottom}px 0);
-		}
-	}
 }
 
 hr {
@@ -126,10 +64,10 @@ input {
 	justify-content: center;
 	align-items: center;
 	text-align: center;
-	width: 90px;
+	width: 70px;
 	height: 25px;
 	margin: 0px 10px 0px 0px;
-	padding: 14px;
+	padding: 8px;
 	border: 1px solid var(--yellow);
 	background-color: var(--dark-blue);
 	color: var(--white);
@@ -141,20 +79,83 @@ button {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	width: 70px;
 	height: 25px;
 	margin: 0px 10px;
-	padding: 14px;
-	border: 1px solid var(--white);
+	padding: 8px;
+	// border: 1px solid var(--red);
+	border: none;
 	background-color: var(--yellow);
 	color: var(--black);
 	font-weight: bold;
 	text-transform: uppercase;
 	cursor: pointer;
-	clip-path: polygon(92% 0, 100% 25%, 100% 100%, 8% 100%, 0% 75%, 0 0);
+	clip-path: polygon(90% 0, 100% 25%, 100% 100%, 10% 100%, 0% 75%, 0 0);
 }
 
 button:hover {
 	background-color: var(--dark-yellow);
+}
+
+.glitch {
+	margin: 15px 0px;
+	color: var(--white);
+	position: relative;
+	font-size: 1.6rem;
+	animation: glitch 5s 5s infinite;
+}
+
+.glitch::before {
+	content: attr(data-text);
+	position: absolute;
+	top: -50px;
+	text-shadow: -5px 0 magenta;
+	background: black;
+	overflow: hidden;
+	top: 0;
+	animation: noise-1 3s linear infinite alternate-reverse, glitch 5s 5s infinite;
+}
+
+.glitch::after {
+	content: attr(data-text);
+	position: absolute;
+	left: 20px;
+	text-shadow: -5px 0 lightgreen;
+	background: black;
+	overflow: hidden;
+	top: 0;
+	animation: noise-2 3s linear infinite alternate-reverse, glitch 5s 5s infinite;
+}
+
+@keyframes glitch {
+	1% {
+		transform: rotateX(10deg) skewX(90deg);
+	}
+	2% {
+		transform: rotateX(0deg) skewX(0deg);
+	}
+}
+
+@keyframes noise-1 {
+	$steps: 30;
+	@for $i from 1 through $steps {
+		#{percentage($i*(1/$steps))} {
+			$top: random(120);
+			$bottom: random(121 - $top);
+			clip-path: inset(#{$top}px 0 #{$bottom}px 0);
+		}
+	}
+}
+
+@keyframes noise-2 {
+	$steps: 30;
+	@for $i from 0 through $steps {
+		#{percentage($i*(1/$steps))} {
+			$top: random(120);
+			$bottom: random(121 - $top);
+			clip-path: inset(#{$top}px 0 #{$bottom}px 0);
+		}
+	}
 }
 
 .container {
@@ -166,6 +167,7 @@ button:hover {
 
 .container-title {
 	font-size: 1rem;
+	letter-spacing: 3px;
 	text-align: center;
 	margin: 10px 0px;
 	color: var(--red);
@@ -176,13 +178,21 @@ button:hover {
 	align-items: center;
 }
 
+#utility-container {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
 [contenteditable]:focus {
 	border-bottom: 1px solid black;
 	padding: 5px;
 }
 .name {
+	margin: 10px 10px 10px 0px;
 	color: var(--white);
-	letter-spacing: 2px;
+	letter-spacing: 3px;
 }
 
 #friends-container {
@@ -192,6 +202,8 @@ button:hover {
 #add-user-container {
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 
 .name-container {
@@ -210,10 +222,25 @@ button:hover {
 
 #footer-container {
 	display: flex;
-	justify-content: center;
-	align-items: center;
+	flex-direction: column;
 }
 
 #delete-data-btn {
 	margin: 10px;
+}
+
+#add-friend-btn {
+	margin-top: 20px;
+	width: 120px;
+}
+
+#new-friend-name,
+#new-friend-id {
+	margin: 0px 10px;
+}
+
+#delete-data-btn,
+#switch-theme-btn {
+	width: 120px;
+	padding: 15px;
 }
