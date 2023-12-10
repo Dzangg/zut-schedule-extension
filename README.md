@@ -1,6 +1,6 @@
 # zut-schedule-extension
 
-Chrome-based extension with cyberpunk theme made for students to easily access lesson schedules. 
+Chrome-based extension with cyberpunk theme made for students to easily access lesson schedules on university website. 
 
 ### Initial Preview
 ![zutnik_main](https://github.com/Dzangg/zut-schedule-extension/assets/79015072/fc6ab4ad-f846-4818-98b6-d13a62779155.png)
