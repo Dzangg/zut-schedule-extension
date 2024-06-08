@@ -24,7 +24,7 @@ To install and use the `zut-schedule-extension`, follow these steps:
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/your-username/zut-schedule-extension.git
+   git clone https://github.com/Dzangg/Password_manager.git
    cd zut-schedule-extension
 
 
